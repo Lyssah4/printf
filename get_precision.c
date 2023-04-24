@@ -2,6 +2,7 @@
 /**
  * get_precision - calculates the precision for printing
  * @format: fornatted string in which to print the arguments
+ * @i: an int
  * @list: list of arguments.
  * Return: Precision.
  */
