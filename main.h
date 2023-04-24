@@ -94,10 +94,10 @@ int handle_write_char(char c, char buffer[],
 			int flags, int width, int precision, int size);
 int write_number(int is_positive, int ind, char buffer[],
 			int flags, int width, int precision, int size);
-int write_num(int ind, char bff[], int flags, int width, int precision,
-			int length, char padd, char extra_c);
-int write_pointer(char buffer[], int ind, int length,
-		int width, int flags, char padd, char extra_c, int padd_start);
+int write_num(int x, char buf[], int f, int w, int prec,
+			int len, char pd, char extra_c);
+int write_pointer(char buf[], int ind, int len,
+		int w, int f, char pd, char extra_c, int pd_st);
 int write_unsgnd(int is_negative, int ind,
 		char buffer[], int flags, int width, int precision, int size);
 
