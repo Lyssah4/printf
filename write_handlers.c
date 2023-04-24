@@ -74,61 +74,59 @@ int write_number(int is_negative, int ind, char buffer[],
 }
 /**
  * write_num - Write a number using a buffer
- * @ind: Index at which the number starts on the buffer
+ * @x: Index at which the number starts on the buffer
  * @buf: Buffer
  * @f: Flags
  * @w: width
  * @prec: Precisiom specifier
- * @len: Number length
+ * @l: Number length
  * @pd: Pading char
  * @extra_c: Extra char
  * Return: Number if printed chars
  */
-int write_num(int ind, char buf[], int f, int w, int prec,
-		int len, char pd, char extra_c)
+int write_num(int x, char buf[], int f, int w, int prec,
+		int l, char pd, char extra_c)
 {
 	int i, pd_st = 1;
 
-	if (prec == 0 && ind == BUFF_SIZE - 2 && buf[ind] == '0' && w == 0)
+	if (prec == 0 && x == BUFF_SIZE - 2 && buf[x] == '0' && w == 0)
 		return (0);
-	if (prec == 0 && ind == BUFF_SIZE - 2 && buf[ind] == '0')
-		buf[ind] = pd = ' ';
+	if (prec == 0 && x == BUFF_SIZE - 2 && buf[x] == '0')
+		buf[x] = pd = ' ';
 	if (prec > 0 && prec < len)
 		pd = ' ';
-	while (prec > len)
-		buf[--ind] = '0', len++;
+	while (prec > l)
+		buf[--x] = '0', len++;
 	if (extra_c != 0)
-		len++;
-	if (w > len)
+		l++;
+	if (w > l)
 	{
-		for (i = 1; i < w - len + 1; i++)
+		for (i = 1; i < w - l + 1; i++)
 			buf[i] = pd;
 		buf[i] = '\0';
 		if (f & F_MINUS && pd == ' ')
 		{
 			if (extra_c)
 				buf[--ind] = extra_c;
-			return (write(1, &buf[ind], len) + write(1,
-						buf[1], i - 1));
+			return (write(1, &buf[x], l) + write(1, buf[1], i - 1));
 		}
 		else if (!(f & F_MINUS) && pd == ' ')
 		{
 			if (extra_c)
-				buf[--ind] = extra_c;
-			return (write(1, &buf[1], i - 1) + write(1,
-						&buf[ind], len));
+				buf[--x] = extra_c;
+			return (write(1, &buf[1], i - 1) + write(1, &buf[x], l));
 		}
 		else if (!(f & F_MINUS) && padd == '0')
 		{
 			if (extra_c)
 				buffer[--pd_st] = extra_c;
 			return (write(1, &buf[pd_st], i - pd_st) +
-				write(1, &buf[ind], len - (1 - pd_st)));
+				write(1, &buf[x], len - (1 - pd_st)));
 		}
 	}
 	if (extra_c)
-		buf[--ind] = extra_c;
-	return (write(1, &buf[ind], len));
+		buf[--x] = extra_c;
+	return (write(1, &buf[x], len));
 }
 /**
  * write_unsgnd - Writes an unsigned number
