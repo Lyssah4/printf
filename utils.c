@@ -23,7 +23,7 @@ char *converter(unsigned long int n, int base, int lcase)
 		n /= base;
 	} while (n != 0);
 
-	return (ptr);
+	return (pointer);
 }
 /**
  * is_digit - checks if char is a digit

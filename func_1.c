@@ -22,7 +22,7 @@ int print_binary(va_list args, char buf[],
 	UNUSED(prec);
 	UNUSED(size);
 
-	a = va_arg(types, unsigned int);
+	a = va_arg(args, unsigned int);
 	b = 2147483648;
 	str[0] = a / b;
 	while (c < 32)
@@ -87,7 +87,8 @@ int print_int(va_list args, char buf[],
 	}
 	a++;
 
-	return (write_number(neg, i, buf, f, w, prec, size));
+	return (write_number(neg, a, buf, f, w, prec, size));
+	return (0);
 }
 /**
  * print_hexa_low - prints in hexadecimal notation
@@ -115,11 +116,12 @@ int print_hexa_low(va_list args, char buf[],
  * @size: Size spec
  * Return: Number of chars
  */
-int print_hexa_upper(va_list args, char buf[],
+int print_hexa_big(va_list args, char buf[],
 		int f, int w, int prec, int size)
 {
-	return (print_hexa(aegs, "0123456789ABCDEF", buf,
+	return (print_hexa(args, "0123456789ABCDEF", buf,
 				f, 'X', w, prec, size));
+	return (0);
 }
 /**
  * print_hexa - prints a hexadecimal number in lower or upper
@@ -160,8 +162,6 @@ int print_hexa(va_list args, char map_to[], char buf[],
 		buf[a--] = flag_ch;
 		buf[a--] = '0';
 	}
-
 	a++;
-
 	return (write_unsgnd(0, a, buf, f, w, prec, size));
 }

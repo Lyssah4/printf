@@ -93,10 +93,10 @@ int write_num(int x, char buf[], int f, int w, int prec,
 		return (0);
 	if (prec == 0 && x == BUFF_SIZE - 2 && buf[x] == '0')
 		buf[x] = pd = ' ';
-	if (prec > 0 && prec < len)
+	if (prec > 0 && prec < l)
 		pd = ' ';
 	while (prec > l)
-		buf[--x] = '0', len++;
+		buf[--x] = '0', l++;
 	if (extra_c != 0)
 		l++;
 	if (w > l)
@@ -107,8 +107,8 @@ int write_num(int x, char buf[], int f, int w, int prec,
 		if (f & F_MINUS && pd == ' ')
 		{
 			if (extra_c)
-				buf[--ind] = extra_c;
-			return (write(1, &buf[x], l) + write(1, buf[1], i - 1));
+				buf[--x] = extra_c;
+			return (write(1, &buf[x], l) + write(1, &buf[1], i - 1));
 		}
 		else if (!(f & F_MINUS) && pd == ' ')
 		{
@@ -116,10 +116,10 @@ int write_num(int x, char buf[], int f, int w, int prec,
 				buf[--x] = extra_c;
 			return (write(1, &buf[1], i - 1) + write(1, &buf[x], l));
 		}
-		else if (!(f & F_MINUS) && padd == '0')
+		else if (!(f & F_MINUS) && pd == '0')
 		{
 			if (extra_c)
-				buffer[--pd_st] = extra_c;
+				buf[--pd_st] = extra_c;
 			return (write(1, &buf[pd_st], i - pd_st) +
 				write(1, &buf[x], len - (1 - pd_st)));
 		}
@@ -176,8 +176,7 @@ int write_unsgnd(int is_negative, int ind,
 		}
 		else
 		{
-			return (write(1, buffer[0], i) + write(1, &buffer[ind],
-	length));
+			return (write(1, &buffer[0], i) + write(1, &buffer[ind], length));
 		}
 	}
 	return (write(1, &buffer[ind], length));
@@ -222,7 +221,7 @@ int write_pointer(char buf[], int ind, int len,
 			return (write(1, &buf[3], i - 3) + write(1,
 &buf[ind], len));
 		}
-		else if (!(flags & F_MINUS) && padd == '0')
+		else if (!(f & F_MINUS) && pd == '0')
 		{
 			if (extra_c)
 				buf[--pd_st] = extra_c;

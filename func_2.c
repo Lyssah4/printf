@@ -2,13 +2,23 @@
 /**
  * print_percent - prints a percent sign
  * @args: arg list
- * @p: pointer to the struct
- * Return: number of char printed
+ * @buf: array
+ * @f: Calculates flags
+ * @w: get width
+ * @prec: Precision specification
+ * @size: Size
+ * Return: Numbers of chars
  */
-int print_percent(va_list args, flags_t *p)
+int print_percent(va_list args, char buf[],
+		int f, int w, int prec, int size)
 {
-	UNUSED(p);
+	UNUSED(args);
+	UNUSED(buf);
 	UNUSED(f);
+	UNUSED(w);
+	UNUSED(prec);
+	UNUSED(size);
+
 	return (_putchar('%'));
 }
 /**
@@ -21,25 +31,24 @@ int print_percent(va_list args, flags_t *p)
  * @size: Size
  * Return: Numbers of chars
  */
-
 int print_reverse(va_list args, char buf[],
 		int f, int w, int prec, int size)
 {
 	int a;
 	char *string;
 
-	UNUSEDbuf;
+	UNUSED(buf);
 	UNUSED(f);
 	UNUSED(w);
 	UNUSED(size);
 	UNUSED(prec);
 
-	str = va_arg(args, char *);
+	string = va_arg(args, char *);
 
 	if (string == NULL)
 		string = "(null)";
 
-	while (str[a])
+	while (string[a])
 		a++;
 	a = a - 1;
 	while (a >= 0)
@@ -50,94 +59,132 @@ int print_reverse(va_list args, char buf[],
 	return (a);
 }
 /**
- * print_rot13 - prints a string in rot13
+ * print_rot13 - print string in rot13
  * @args: arg list
- * @p: pointer to the struct
- *
- * Return: length of the printed string
+ * @buf: array
+ * @f:  Calculates flags
+ * @w: get width.
+ * @prec: Precision spec
+ * @size: Size
+ * Return: Number of chars
  */
-int print_rot13(va_list args, flags_check *p)
+int print_rot13(va_list args, char buf[],
+		int f, int w, int prec, int size)
 {
-	int a, b;
+	unsigned int a, b;
 	char rot13[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	char ROT13[] = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM";
 	char *c = va_arg(args, char *);
+	char string;
+	int acc = 0;
 
-	UNUSED(p);
-	while (c[b])
+	UNUSED(buf);
+	UNUSED(f);
+	UNUSED(w);
+	UNUSED(prec);
+	UNUSED(size);
+
+	if (c == NULL)
+		c = "(AHYY)";
+	for (a = 0; c[a]; a++)
 	{
-		if (c[b] < 'A' || (c[b] > 'Z' && c[b] < 'a') || c[b] > 'z')
-			_putchar(c[b]);
-
-		else
+		for (b = 0; rot13[b]; b++)
 		{
-			while (a <= 52)
+			if (rot13[b] == str[a])
 			{
-				if (c[b] == rot13[a])
-					_putchar(ROT13[a]);
-				a++;
+				string = ROT13[b];
+				write(1, &string, 1);
+				acc++;
+				break;
 			}
 		}
-		b++;
+		if (!rot13[b])
+		{
+			string = c[a];
+			write(1, &string, 1);
+			acc++;
+		}
 	}
-	return (b);
+	return (acc);
 }
+
 /**
  * print_pointer - prints the value of a pointer
  * @args: arg list
- * @p: pointer to the flag_check structure
- *
- * Return: Number of chars printed.
+ * @buf: array
+ * @f:  Calculates flags
+ * @w: get width.
+ * @prec: Precision spec
+ * @size: Size
+ * Return: Number of chars
  */
-int print_pointer(va_list args, flag_check *p)
+int print_pointer(va_list args, char buf[],
+		int f, int w, int prec, int size)
 {
-	char *string;
-	unsigned long *address = va_arg(types, unsigned long int *);
+	char mt[] = "0123456789abcdef";
+	void *addrs = va_arg(types, void *);
+	unsigned long address;
+	char pd = ' ', ext = 0;
+	int pd_st = 1, x = BUFF_SIZE - 2, len = 2;
 
-	UNUSED(p);
+	UNUSED(width);
+	UNUSED(size);
+	UNUSED(prec);
 
-	if (address == NULL)
-		return (_puts("(nill)"));
+	if (addrs == NULL)
+		return (write(1, "(nil)", 5));
 
-	string = converter(p, 16, 1);
+	buf[BUFF_SIZE - 1] = '\0';
+	address = (unsigned long)addrs;
 
-	num += _puts("0x");
-	num += _puts(string);
+	while (address > 0)
+	{
+		buf[x--] = mt[address % 16];
+		address /= 16;
+		len++;
+	}
+	if ((f & F_ZERO) && !(f & F_MINUS))
+		padd = '0';
+	if (f & F_PLUS)
+		ext = '+', length++;
+	else if (f & F_SPACE)
+		ext = ' ', len++;
 
-	return (num);
+	x++;
+
+	return (write_pointer(buf, x, len, w, f, pd, ext, pd_st));
 }
 /**
- * print_non_printable - prints Non printable characters
- * @args: args list
- * @p: pointer to the flag checker structure
- *
- * Return: Number of chars printed
+ * print_non_printable - print string
+ * @args: arg list
+ * @buf: array
+ * @f:  Calculates flags
+ * @w: get width.
+ * @prec: Precision spec
+ * @size: Size
+ * Return: Number of chars
  */
-int print_non_printable(va_list args, flag_check *p)
+int print_non_printable(va_list args, char buf[],
+		int f, int w, int prec, int size)
 {
-	int num = 0, a;
-	char *r;
 	char *c = va_arg(args, char *);
+	int a, num = 0;
 
-	UNUSED(p);
-	if (!s)
-		return (_puts("(null)"));
+	UNUSED(flags);
+	UNUSED(width);
+	UNUSED(prec);
+	UNUSED(size);
 
-	while (c[a])
+	if (c == NULL)
+		return (write(1, "(null)", 6));
+
+	for (a = 0; c[a] != '\0'; a++)
 	{
-		if (c[a] > 0 && (c[a] < 32 || c[a] >= 127))
-		{
-			_puts("\\x");
-			num += 2;
-			r = converter(c[a], 16, 0);
-			if (!r[1])
-				num += _putchar('0');
-
-			num += _puts(r);
-		}
+		if (is_printable(c[a]))
+			buf[a + offset] = c[a];
 		else
-			num += _putchar(c[a]);
-		a++;
+			num += append_hexa_code(c[a], buf, a + num);
 	}
-	return (num);
+	buf[a + num] = '\0';
+	return (write(1, buf, a + num));
 }

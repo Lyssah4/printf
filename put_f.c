@@ -41,3 +41,24 @@ int _puts(char *str)
 	}
 	return (a);
 }
+/**
+ * append_hexa_code - append ascci in hexadecimal to buffer
+ * @buf: array
+ * @a: index at which to start appending.
+ * @asc: ascii CODE
+ * Return: Always 3
+ */
+int append_hexa_code(char asc, char buf[], int a)
+{
+	char mt[] = "0123456789ABCDEF";
+
+	if (asc < 0)
+		asc *= -1;
+
+	buf[a++] = '\\';
+	buf[a++] = 'x';
+	buf[a++] = mt[asc / 16];
+	buf[a] = mt[asc % 16];
+
+	return (3);
+}
