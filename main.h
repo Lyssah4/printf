@@ -52,7 +52,7 @@ int print_rot13(va_list args, char buf[],
 		int f, int w, int prec, int size);
 int print_non_printable(va_list args, char buf[],
 		int f, int w, int prec, int size);
-int print_pointer(va_list args, char buf[],
+int print_pointer(va_list types, char buf[],
 		int f, int w, int prec, int size);
 
 
@@ -84,7 +84,7 @@ int handle_write_char(char c, char buffer[],
 int write_number(int is_positive, int ind, char buffer[],
 			int flags, int width, int precision, int size);
 int write_num(int x, char buf[], int f, int w, int prec,
-			int len, char pd, char extra_c);
+			int l, char pd, char extra_c);
 int write_pointer(char buf[], int ind, int len,
 		int w, int f, char pd, char extra_c, int pd_st);
 int write_unsgnd(int is_negative, int ind,

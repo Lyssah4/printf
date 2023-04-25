@@ -121,12 +121,12 @@ int write_num(int x, char buf[], int f, int w, int prec,
 			if (extra_c)
 				buf[--pd_st] = extra_c;
 			return (write(1, &buf[pd_st], i - pd_st) +
-				write(1, &buf[x], len - (1 - pd_st)));
+				write(1, &buf[x], l - (1 - pd_st)));
 		}
 	}
 	if (extra_c)
 		buf[--x] = extra_c;
-	return (write(1, &buf[x], len));
+	return (write(1, &buf[x], l));
 }
 /**
  * write_unsgnd - Writes an unsigned number

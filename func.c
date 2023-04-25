@@ -88,19 +88,19 @@ int print_unsigned(va_list args, char buf[],
 	int a = BUFF_SIZE - 2;
 	unsigned long int n = va_arg(args, unsigned long int);
 
-	num = convert_size_unsgnd(n, size);
+	n = convert_size_unsgnd(n, size);
 
-	if (num == 0)
+	if (n == 0)
 	buf[a--] = '0';
 
 	buf[BUFF_SIZE - 1] = '\0';
 
-	while (num > 0)
+	while (n > 0)
 	{
-		buf[a--] = (num % 10) + '0';
-		num /= 10;
+		buf[a--] = (n % 10) + '0';
+		n /= 10;
 	}
-	i++;
+	a++;
 
 	return (write_unsgnd(0, a, buf, f, w, prec, size));
 }
@@ -127,7 +127,7 @@ int print_octal(va_list args, char buf[],
 	n = convert_size_unsgnd(n, size);
 
 	if (n == 0)
-		buffer[a--] = '0';
+		buf[a--] = '0';
 
 	buf[BUFF_SIZE - 1] = '\0';
 
